@@ -13,6 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="0dp">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/boot"
+            android:onClick="onOperationClick"
+            android:layout_width="115dp"
+            android:layout_height="68dp"
+            android:layout_marginHorizontal="160dp"
+            android:layout_marginTop="50dp" />
+
         <TextView
             android:id="@+id/tv_result"
             android:layout_gravity="bottom|end"

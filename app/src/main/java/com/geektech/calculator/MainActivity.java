@@ -2,8 +2,10 @@ package com.geektech.calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,13 +15,24 @@ public class MainActivity extends AppCompatActivity {
     private Integer second;
     private Boolean isOperationClick;
     private String operation;
-
-
+    private Button btn_go_over;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         tvResult = findViewById(R.id.tv_result);
+        btn_go_over = findViewById(R.id.boot);
+
+        btn_go_over.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, SecondActivity.class);
+                String result = tvResult.getText().toString();
+                intent.putExtra("result", result);
+                startActivity(intent);
+            }
+        });
     }
 
     public void onNumberClick(View view) {
@@ -157,9 +170,12 @@ public class MainActivity extends AppCompatActivity {
                 tvResult.setText("-");
                 break;
         }
+        btn_go_over.setVisibility(View.INVISIBLE);
+        isOperationClick = false;
     }
 
     public void onOperationClick(View view) {
+        btn_go_over.setVisibility(View.INVISIBLE);
         switch (view.getId()){
             case R.id.btn_plus:
                 //12
@@ -199,6 +215,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.btn_equal:
+                btn_go_over.setVisibility(view.getVisibility());
                 setSecond();
                 Integer result = Integer.valueOf(0);
                 isOperationClick = true;
@@ -234,6 +251,7 @@ public class MainActivity extends AppCompatActivity {
                         tvResult.setText(result.toString());
                         break;
                 }
+                btn_go_over.setVisibility(view.getVisibility());
                 break;
         }
     }
